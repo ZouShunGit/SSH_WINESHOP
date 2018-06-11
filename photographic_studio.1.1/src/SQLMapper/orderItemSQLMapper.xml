@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studio.order.dao.OrderItemDao">
+	<resultMap type="OrderItem" id="itemMap">
+		<id property="oiid" column="oiid" />
+		<result property="setnum" column="setnum" />
+		<result property="oid" column="oid" />
+		<association property="set" javaType="Set">
+			<id property="setid" column="setid" />
+			<result property="setname" column="setname" />
+			<result property="setimg" column="setimg" />
+			<result property="clothingnum" column="clothingnum" />
+			<result property="imgnum" column="imgnum" />
+			<result property="setdesc" column="setdesc" />
+			<result property="facdeprice" column="facdeprice" />
+			<result property="onlineprice" column="onlineprice" />
+			<result property="creattime" column="creattime" />
+			<result property="is_delete" column="isdelete" />
+		</association>
+	</resultMap>
+	<insert id="add" parameterType="int">
+		insert into S_ORDERITEM(setnum,setid,oid)
+		values(#{setnum},#{set.setid},#{oid})
+	</insert>
+	<select id="findAll" parameterType="int" resultMap="itemMap">
+		select o.*,s.* from S_ORDERITEM o,S_SET s where o.oid = #{oid} and
+		o.setid = s.setid
+	</select>
+</mapper>

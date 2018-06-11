@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="admin" namespace="/admin" extends="studio">
+		<global-allowed-methods>login,edit,quit,add,delete,findByAemail,editPass,editPassPage,findAll,editPage,addPage,edit,oldPass</global-allowed-methods>
+		<action name="adminAction_*" class="adminAction" method="{1}">
+			<result name="login">/adminLogin.jsp</result>
+			<result name="index">/admin/index.jsp</result>
+			<result name="findAll">/admin/list.jsp</result>
+			<result name="addPage">/admin/add.jsp</result>
+			<result name="editPage">/admin/edit.jsp</result>
+			<result name="editPassPage">/admin/oldpass.jsp</result>
+			<result name="newPass">/admin/newPass.jsp</result>
+			<result name="find" type="redirectAction">/adminAction_findAll.action?pageBean.page=1</result>
+		</action>
+	</package>
+</struts>

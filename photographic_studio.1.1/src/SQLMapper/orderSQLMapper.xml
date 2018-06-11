@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studio.order.dao.OrderDao">
+	<resultMap type="Order" id="orderMap">
+		<id property="oid" column="oid"></id>
+		<result property="maleguests" column="maleguests" />
+		<result property="femaleguests" column="femaleguests" />
+		<result property="otel" column="otel" />
+		<result property="oaddress" column="oaddress" />
+		<result property="photodate" column="photodate" />
+		<result property="selectdate" column="selectdate" />
+		<result property="earnest" column="earnest" />
+		<result property="realprice" column="realprice" />
+		<result property="ostate" column="ostate" />
+		<result property="is_delete" column="is_delete" />
+		<result property="photographer" column="photographer"/>
+		<result property="dresser" column="dresser"/>
+		<result property="getdate" column="getdate" />
+		<result property="creattime" column="creattime" />
+		<association property="user" javaType="User">
+			<id property="id" column="id"></id>
+			<result property="uemail" column="uemail" />
+			<result property="utel" column="utel" />
+			<result property="uname" column="uname" />
+			<result property="usex" column="usex" />
+			<result property="uaddress" column="uaddress" />
+			<result property="ucreattime" column="ucreattime" />
+			<result property="code" column="code" />
+			<result property="password" column="password" />
+		</association>
+	</resultMap>
+	<!-- 添加 -->
+	<insert id="add" parameterType="int">
+		insert into
+		S_ORDER(id,otel,oaddress,creattime,earnest,realprice,ostate)
+		values(#{user.id},#{user.utel},#{user.uaddress},#{creattime},#{earnest},#{realprice},#{ostate})
+	</insert>
+	<!-- 查询 -->
+	<select id="findAll" parameterType="int" resultMap="orderMap">
+		<if test="creattime != null">
+			select * from S_ORDER t where t.creattime=(select
+			max(creattime) from S_ORDER s where id= #{user.id})
+		</if>
+		<if test="creattime == null">
+			select ord.*,u.* from (select t.*,rownum rn from S_ORDER t where t.is_delete
+      = 0 
+			<if test="oid != 0">
+				and t.oid = #{oid}
+			</if>
+			<if test="user != null and user.id != 0">
+				and t.id = #{user.id}
+			</if>
+			<if test="ostate != 0 and ostate != null">
+				and t.ostate = #{ostate}
+			</if>
+			) ord,S_USER u where u.id = ord.id
+			<if test="pageBean != null and pageBean.endnum != 0">
+				and ord.rn between #{pageBean.startnum}+1 and
+				#{pageBean.endnum}
+			</if>
+
+		</if>
+	</select>
+	<!-- 修改 -->
+	<update id="update" parameterType="int">
+		update S_ORDER set
+		<if test="is_delete != 1">
+			<if test="ostate != 3 and ostate != 4 ">
+				maleguests=#{maleguests},femaleguests=#{femaleguests},
+				otel=#{otel},oaddress=#{oaddress},
+				photodate=#{photodate},photographer=#{photographer},
+				dresser=#{dresser},ostate=2
+			</if>
+			<if test="selectdate!=null and ostate == 4">
+			selectdate = #{selectdate},ostate =4
+			</if>
+			<if test="ostate == 3 and selectdate ==null">
+				ostate=3
+			</if>
+			<if test="ostate == 4 and selectdate ==null">
+				ostate=3
+			</if>
+		</if>
+		<if test="is_delete == 1">
+			is_delete=#{is_delete}
+		</if>
+		where oid=#{oid}
+	</update>
+</mapper>

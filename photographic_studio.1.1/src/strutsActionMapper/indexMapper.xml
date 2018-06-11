@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="index" namespace="/index" extends="studio">
+		<global-allowed-methods>find</global-allowed-methods>
+		<action name="indexAction_*" class="indexAction" method="{1}">
+			<result name="index">/index.jsp</result>
+		</action>
+	</package>
+</struts>

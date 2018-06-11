@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="category" namespace="/category" extends="studio">
+		<global-allowed-methods>findAll,edit,findSname,editPage,add,addPage,delete</global-allowed-methods>
+		<action name="category_*" method="{1}" class="categoryAction">
+			<result name="findAll">/clothing/category/list.jsp</result>
+			<result name="addPage">/clothing/category/add.jsp</result>
+			<result name="editPage">/clothing/category/edit.jsp</result>
+			<result name="add" type="redirectAction">/category_findAll.action?pageBean.page=1
+			</result>
+		</action>
+	</package>
+</struts>

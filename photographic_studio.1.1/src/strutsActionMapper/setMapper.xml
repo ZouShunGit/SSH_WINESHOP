@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="set" namespace="/set" extends="studio">
+		<global-allowed-methods>index,findAll,edit,editPage,findSetname,add,addPage,delete</global-allowed-methods>
+		<action name="setAction_*" method="{1}" class="setAction">
+			<result name="findAll">/set/list.jsp</result>
+			<result name="addPage">/set/add.jsp</result>
+			<result name="editPage">/set/edit.jsp</result>
+			<result name="index">/set/setitem.jsp</result>
+			<result name="find" type="redirectAction">/setAction_findAll.action?pageBean.page=1</result>
+		</action>
+	</package>
+</struts>

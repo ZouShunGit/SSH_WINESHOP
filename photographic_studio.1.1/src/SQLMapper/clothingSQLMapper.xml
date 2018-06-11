@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置映射文件 -->
+<mapper namespace="com.studio.clothing.dao.ClothingDao">
+	<resultMap type="Clothing" id="clothingMap">
+		<id property="cid" column="cid" />
+		<result property="cimg" column="cimg" />
+		<result property="cdesc" column="cdesc" />
+		<result property="creattime" column="creattime" />
+		<result property="is_delete" column="is_delete" />
+		<association property="secondCategory"
+			javaType="sCategory">
+			<id property="scid" column="scid" />
+			<result property="scdesc" column="scdesc" />
+			<result property="name" column="name" />
+			<result property="is_delete" column="is_delete" />
+			<result property="creattime" column="creattime" />
+		</association>
+	</resultMap>
+	<!-- 添加信息 -->
+	<insert id="add" parameterType="int">
+		insert into
+		S_CLOTHING(cimg,cdesc,creattime,scid)
+		values(#{cimg},#{cdesc},#{creattime},#{secondCategory.scid})
+	</insert>
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="int" resultMap="clothingMap">
+		select c.*,sc.* from (select cl.*,rownum rn from S_CLOTHING cl where
+		cl.is_delete = 0
+		<if test="cid != 0">
+			and cl.cid = #{cid}
+		</if>
+		<if test="secondCategory !=null and secondCategory.scid != 0">
+			and cl.scid = #{secondCategory.scid}
+		</if>
+		)c,S_CLOTHINGSECONDCATEGORY sc where
+		c.scid = sc.scid
+		<if test="pageBean != null and pageBean.endnum != 0">
+			and rn between #{pageBean.startnum}+1 and
+			#{pageBean.endnum}
+		</if>
+	</select>
+	<!-- 修改信息 -->
+	<update id="update" parameterType="int">
+		update S_CLOTHING set
+		<if test="is_delete != 1">
+			cimg = #{cimg},cdesc = #{cdesc},scid =
+			#{secondCategory.scid}
+		</if>
+		<if test="is_delete == 1">
+			is_delete = #{is_delete}
+		</if>
+		where cid = #{cid}
+	</update>
+</mapper>

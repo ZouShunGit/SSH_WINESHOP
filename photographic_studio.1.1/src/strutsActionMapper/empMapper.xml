@@ -1,0 +1,17 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="emp" namespace="/emp" extends="studio">
+		<global-allowed-methods>findAll,find,index,addPage,add,editPage,edit</global-allowed-methods>
+		<action name="empAction_*" class="empAction" method="{1}">
+			<result name="findAll">/employee/list.jsp</result>
+			<result name="addPage">/employee/add.jsp</result>
+			<result name="editPage">/employee/edit.jsp</result>
+			<result name="find" type="redirectAction">/empAction_findAll.action?pageBean.page=1
+			</result>
+			<result name="index">/employee/item.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置映射文件 -->
+<mapper namespace="com.studio.admin.dao.AdminDao">
+	<!-- 登录 -->
+	<select id="login" parameterType="int" resultType="Admin">
+		select
+		aid,aname,aemail,alevel from S_ADMIN Where aemail =
+		#{aemail} and
+		password =
+		#{password}
+	</select>
+	<!-- 查询总数 -->
+	<select id="findAll" parameterType="Admin" resultType="Admin">
+		select d.* from (select s.*,rownum rn from S_ADMIN s where
+		is_delete = 0
+		<if test="aid != 0">
+			and s.aid = #{aid}
+		</if>
+		<if test="aname != null and aname != '' ">
+			and s.aname = #{aname}
+		</if>
+		<if test="aemail != null and aemail != '' ">
+			and s.aemail = #{aemail}
+		</if>
+		<if test="alevel != 0">
+			and s.alevel= #{alevel}
+		</if>
+		) d where 1=1
+		<if test="pageBean.endnum != 0">
+			and d.rn between #{pageBean.startnum}+1 and
+			#{pageBean.endnum}
+		</if>
+	</select>
+	<!-- 添加管理员 -->
+	<insert id="add" parameterType="int">
+		insert into
+		S_ADMIN(aname,aemail,atel,alevel)
+		values(#{aname},#{aemail},#{atel},#{alevel})
+	</insert>
+	<update id="update">
+		update S_ADMIN set
+		<if test="password != null">
+			password = #{password}
+		</if>
+		<if test="aname != null and atel != null and alevel != null">
+			aname = #{aname},aemail = #{aemail},atel = #{atel},alevel
+			= #{alevel}
+		</if>
+		<if test="is_delete == 1">
+			is_delete = #{is_delete}
+		</if>
+		where aid = #{aid}
+	</update>
+</mapper>

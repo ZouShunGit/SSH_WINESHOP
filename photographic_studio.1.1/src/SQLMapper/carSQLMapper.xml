@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studio.car.dao.CarDao">
+	<resultMap type="Car" id="carMap">
+		<id property="carid" column="carid" />
+		<result property="carprice" column="carprice" />
+		<result property="setnum" column="setnum" />
+		<result property="id" column="id"/>
+		<association property="set" javaType="Set">
+			<id property="setid" column="setid" />
+			<result property="setname" column="setname" />
+			<result property="clothingnum" column="clothingnum" />
+			<result property="imgnum" column="imgnum" />
+			<result property="setdesc" column="setdesc" />
+			<result property="facdeprice" column="facdeprice" />
+			<result property="onlineprice" column="onlineprice" />
+			<result property="creattime" column="creattime" />
+			<result property="is_delete" column="isdelete" />
+		</association>
+	</resultMap>
+	<!-- 查询 -->
+	<select id="findAll" parameterType="int" resultMap="carMap">
+		select c.*,s.* from S_CAR c,S_SET s where id = #{id} and c.setid
+		=
+		s.setid 
+		<if test="set != null">
+		and c.setid = #{set.setid}
+		</if>
+		<if test="carid != 0">
+			and carid = #{carid}
+		</if>
+	</select>
+	<!-- 添加 -->
+	<insert id="add" parameterType="int">
+		insert into
+		S_CAR(carprice,setnum,id,setid)
+		values(#{carprice},#{setnum},#{id},#{set.setid})
+	</insert>
+	<!-- 修改 -->
+	<update id="update" parameterType="int">
+		update S_CAR set setnum =
+		#{setnum},carprice = #{carprice} where carid = #{carid}
+	</update>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from S_CAR where id =#{id}
+		<if test="carid != 0">
+		and carid = #{carid}
+		</if>
+	</delete>
+
+</mapper>

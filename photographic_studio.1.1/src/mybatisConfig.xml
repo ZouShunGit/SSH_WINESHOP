@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.studio.user.entity.User" alias="User" />
+		<typeAlias type="com.studio.admin.entity.Admin" alias="Admin" />
+		<typeAlias type="com.studio.department.entity.Department" alias="Dept" />
+		<typeAlias type="com.studio.employeelevel.entity.EmployeeLevel" alias="EmpLevel" />
+		<typeAlias type="com.studio.employee.entity.Employee" alias="Emp" />
+		<typeAlias type="com.studio.clothing.entity.Category" alias="Category" />
+		<typeAlias type="com.studio.clothing.entity.SecondCategory" alias="sCategory" />
+		<typeAlias type="com.studio.clothing.entity.Clothing" alias="Clothing" />
+		<typeAlias type="com.studio.set.entity.Set" alias="Set"/>
+		<typeAlias type="com.studio.set.entity.Comments" alias="Comments"/>
+		<typeAlias type="com.studio.car.entity.Car" alias="Car"/>
+		<typeAlias type="com.studio.order.entity.Order" alias="Order"/>
+		<typeAlias type="com.studio.order.entity.OrderItem" alias="OrderItem"/>
+		<typeAlias type="com.studio.util.PageBean" alias="PageBean"/>
+		<typeAlias type="com.studio.sample.entity.Sample" alias="Sample"/>
+		<typeAlias type="com.studio.sample.entity.SampleCategory" alias="SampleCategory"/>
+		<typeAlias type="com.studio.photo.entity.Photo" alias="Photo"/>
+</typeAliases>
+	<mappers>
+		<mapper resource="SQLMapper/userSQLMapper.xml" />
+		<mapper resource="SQLMapper/adminSQLMapper.xml" />
+		<mapper resource="SQLMapper/deptSQLMapper.xml" />
+		<mapper resource="SQLMapper/emplevelSQLMapper.xml" />
+		<mapper resource="SQLMapper/empSQLMapper.xml" />
+		<mapper resource="SQLMapper/categorySQLMapper.xml" />
+		<mapper resource="SQLMapper/scategorySQLMapper.xml" />
+		<mapper resource="SQLMapper/clothingSQLMapper.xml" />
+		<mapper resource="SQLMapper/setSQLMapper.xml" />
+		<mapper resource="SQLMapper/commentsSQLMapper.xml" />
+		<mapper resource="SQLMapper/carSQLMapper.xml" />
+		<mapper resource="SQLMapper/orderSQLMapper.xml" />
+		<mapper resource="SQLMapper/orderItemSQLMapper.xml" />
+		<mapper resource="SQLMapper/samplecategprySQL.xml" />
+		<mapper resource="SQLMapper/sampleSQLMapper.xml"/>
+		<mapper resource="SQLMapper/photoSQLMapper.xml"/>
+	</mappers>
+</configuration>
+  
